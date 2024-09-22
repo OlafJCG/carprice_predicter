@@ -18,7 +18,7 @@ import re
 import numpy as np
 import math
 from category_encoders import BinaryEncoder
-from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import OrdinalEncoder, RobustScaler
 from matplotlib import pyplot as plt
 import seaborn as sns
 from sklearn.impute import KNNImputer, SimpleImputer
@@ -334,25 +334,10 @@ print('Raíz del error cuadrático medio de Regresión Lineal:', mean_squared_er
 
 # %% [markdown]
 # #### XGBoost
- 
-# %%
-# Busca los mejores hiperparámetros para xgboost
-# Define el espacio de hiperparámetros
-space_xgb = {
-    'max_depth': scope.int(hp.uniformint('max_depth', 2,8, q=10.0)),
-    'learning_rate': hp.loguniform('learning_rate', -5, -2),
-    'subsample': hp.uniform('subsample', 0.5, 1)
-}
-best_params = fmin(obj_func_xgb, space_xgb, algo=tpe.suggest, max_evals=100)
-print()
-print('Mejores Hiperparámetros para XGBoost:', best_params)
-
-
-
 
 # %%
 # Crea una instancia para el modelo
-clf_xgb = XGBRegressor(learning_rate=0.006750360235323494, max_depth=2, subsample=0.9875879515017305)
+clf_xgb = XGBRegressor()
 # Define el método de evaluación del modelo
 cv_xgb = RepeatedKFold(n_splits=10, n_repeats=3, random_state=seed)
 # Evalua el modelo
@@ -361,6 +346,27 @@ scores_xgb = cross_val_score(clf_xgb, X_train, y_train, scoring='neg_root_mean_s
 scores_xgb_pos = np.absolute(scores_xgb)
 # Resultado
 print("Raíz del error cuadrático medio de XGBoost:", scores_xgb_pos.mean())
+
+# %% [markdown]
+#  ### Árbol de Regresión.
+# %%
+# Crea una instancia del modelo.
+clf_dtr = DecisionTreeRegressor(random_state=seed)
+dtr_grid = {
+    "criterion":["squared_error", "friedman_mse", "absolute_error", "poisson"],
+    "max_depth":list(range(38,49,5))
+}
+# Pasa el modelo por GridSearchCV.
+dtr_gridscv = GridSearchCV(clf_dtr, dtr_grid, scoring='neg_root_mean_squared_error',verbose=30)
+dtr_gridscv.fit(X_train, y_train) 
+dtr_gridscv.best_params_
+
+# %%
+# Entrena el modelo con los mejores hiperparámetros
+clf_dtr = DecisionTreeRegressor(criterion='poisson', max_depth=43, random_state=seed).fit(X_train, y_train)
+y_pred_dtr = clf_dtr.predict(X_valid)
+# Resultado
+print("Raíz del error cuadrático medio de Árbol de Decisión de regresión:", mean_squared_error(y_valid, y_pred_dtr, squared=False))
 
 
 
