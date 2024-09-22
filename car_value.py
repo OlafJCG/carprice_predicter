@@ -348,7 +348,7 @@ scores_xgb_pos = np.absolute(scores_xgb)
 print("Raíz del error cuadrático medio de XGBoost:", scores_xgb_pos.mean())
 
 # %% [markdown]
-#  ### Árbol de Regresión.
+#  #### Árbol de Regresión.
 # %%
 # Crea una instancia del modelo.
 clf_dtr = DecisionTreeRegressor(random_state=seed)
@@ -368,6 +368,25 @@ y_pred_dtr = clf_dtr.predict(X_valid)
 # Resultado
 print("Raíz del error cuadrático medio de Árbol de Decisión de regresión:", mean_squared_error(y_valid, y_pred_dtr, squared=False))
 
+# %% [markdown]
+#  ### CatBoostClassifier
+# %%
+# Pasa catboost por gridsearch
+cat_grid = {
+    'learning_rate':[0.1,0.5],
+    'iterations':[150]
+}
+cat_model = CatBoostRegressor(loss_function='RMSE',verbose=50, random_state=seed)
+grid_search_result = cat_model.grid_search(param_grid=cat_grid, X=X_train, y=y_train, train_size=0.7)
+grid_search_result['params']
+ 
+
+# %%
+# Entrena el modelo con los mejores parámetros
+cat_model = CatBoostRegressor(loss_function='RMSE', learning_rate=0.5, iterations=150, random_state=seed).fit(X_train, y_train)
+y_pred_cat = cat_model.predict(X_valid)
+# Resultado
+print("Raíz del error cuadrático medio de Árbol de CatBoostRegressor:", mean_squared_error(y_valid, y_pred_cat, squared=False))
 
 
 
