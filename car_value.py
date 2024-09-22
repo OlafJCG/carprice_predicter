@@ -389,88 +389,8 @@ y_pred_cat = cat_model.predict(X_valid)
 print("Raíz del error cuadrático medio de Árbol de CatBoostRegressor:", mean_squared_error(y_valid, y_pred_cat, squared=False))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-#  #### Modelos de arbol y lightgbm, catboost
-
 # %% [markdown]
-#  ##### Codifica algunas características.
-
-# # %%
-# cols_to_ord_enc_dt = ['vehicle_type', 'registration_year','gearbox', 'power', 'model', 'fuel_type', 'brand', 'repaired']
-# ord_enc_to_dt = OrdinalEncoder()
-# df[cols_to_ord_enc_dt] = ord_enc_to_dt.fit_transform(df[cols_to_ord_enc_dt])
-
-
-# %% [markdown]
-#  ##### Separa los datos en conjuntos de entrenamiento y prueba, además de características y objetivo.
-
-# %%
-# Separa en conjuntos
-X_train, X_test, y_train, y_test = train_test_split(df.drop('price',axis=1), df['price'], test_size=0.3, random_state = 1234)
-
-# %% [markdown]
-#  ## Entrenamiento del modelo
-
-# %% [markdown]
-#  ### Regresión Lineal.
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-#  ### Árbol de Regresión.
-# %%
-# Crea una instancia del modelo.
-clf_dtr = DecisionTreeRegressor(random_state=1234)
-dtr_grid = {
-    "criterion":["squared_error", "friedman_mse", "absolute_error", "poisson"],
-    "max_depth":list(range(38,49,5))
-}
-# Pasa el modelo por GridSearchCV.
-dtr_gridscv = GridSearchCV(clf_dtr, dtr_grid, scoring='neg_root_mean_squared_error',verbose=30)
-dtr_gridscv.fit(X_train, y_train) 
-dtr_gridscv.best_params_
-
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-#  ### Bosque aleatorio.
-# %%
-# Crea una instancia del modelo.
-clf_rf = RandomForestRegressor(random_state=1234)
-parameters_grid = {
-    'n_estimators' : list(range(30, 51,20)),
-    'max_depth' : list(range(40,51,10))
-}
-clf_rf_GSCV = GridSearchCV(clf_rf, param_grid=parameters_grid, scoring='neg_root_mean_squared_error', verbose=5)   
-clf_rf_GSCV.fit(X_train, y_train)
-clf_rf_GSCV.best_params_
-
-# %% [markdown]
-#  ### CatBoostClassifier
-# %%
-# Pasa catboost por gridsearch
-cat_grid = {
-    'learning_rate':[0.1,0.5],
-    'iterations':[150]
-}
-cat_model = CatBoostRegressor(loss_function='RMSE',verbose=50, random_state=1234)
-grid_search_result = cat_model.grid_search(param_grid=cat_grid, X=X_train, y=y_train, train_size=0.7)
-grid_search_result['params']
-
-# %% [markdown]
-#  ### LightGBM
+#  #### LightGBM
 # %%
 # Pasa el modelo por gridsearch
 lgb_grid = {
@@ -478,23 +398,35 @@ lgb_grid = {
     "num_leaves":[31],
     "learning_rate":[0.5]
 }
-lgb_model = lgb.LGBMRegressor(metric='rmse', random_state=1234)
-lgb_gscv = GridSearchCV(lgb_model, param_grid=lgb_grid, verbose=50).fit(X_train_lr, y_train_lr)
+lgb_model = lgb.LGBMRegressor(metric='rmse', random_state=seed)
+lgb_gscv = GridSearchCV(lgb_model, param_grid=lgb_grid, verbose=50).fit(X_train, y_train)
 lgb_gscv.best_params_
 
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-#  ### XGB
-
 # %%
-# Pasa el modelo por gridsearch
-model_xgb = xgb.XGBRegressor(eval_metric="rmse",random_state=1234)
-xgb_param_grid = {
-    "max_depth":[4,5],
-    "n_estimators":[100],
-    "learning_rate":[0.1]
-}
-xgb_gscv = GridSearchCV(model_xgb, xgb_param_grid, cv=5,verbose=10).fit(X_train_lr, y_train_lr)
-xgb_gscv.best_params_
+# Entrena el modelo con los mejores parámetros
+lgb_model = lgb.LGBMRegressor(metric='rmse', boosting_type='gbdt', learning_rate=0.5, num_leaves=31, random_state=seed).fit(X_train, y_train)
+# Predice con el conjunto de validación
+y_pred_lgb = lgb_model.predict(X_valid)
+# Score
+print("Raíz del error cuadrático medio de Árbol de LGBRegressor:", mean_squared_error(y_valid, y_pred_lgb, squared=False))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
 
 # %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
 #  ## Análisis del modelo
