@@ -424,29 +424,12 @@ print("Raíz del error cuadrático medio de Árbol de LGBRegressor:", mean_squar
 # ### Prueba el mejor modelo
 y_pred_lgb_test = lgb_model.predict(X_test)
 # Score
-print("Raíz del error cuadrático medio de Árbol de LGBRegressor para el conjunto de prueba:", mean_squared_error(y_valid, y_pred_lgb_test, squared=False))
+print("Raíz del error cuadrático medio de Árbol de LGBRegressor para el conjunto de prueba:", mean_squared_error(y_test, y_pred_lgb_test, squared=False))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
 # ## Conclusiones.
 # - Podemos mejorar nuestros modelos limpiando de mejor manera nuestras características.
 # - Teniendo en cuenta la velocidad y la calidad de la predicción de nuestros modelos, podríamos elegir entre LightGBM o XGBoost.
 # - LightGBM por velocidad.
 # - XGBBoost por calidad de predicción.
-# - Ambos modelos de potenciación tienen un tiempo de entrenamiento como de predicción a bosque aleatorio, sin embargo, nuestro bosque aleatorio tiene una mejor calidad de predicción que nuestros modelos de potenciación.
-# %%
