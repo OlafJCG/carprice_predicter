@@ -411,44 +411,28 @@ y_pred_lgb = lgb_model.predict(X_valid)
 print("Raíz del error cuadrático medio de Árbol de LGBRegressor:", mean_squared_error(y_valid, y_pred_lgb, squared=False))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
+# ### Prueba el mejor modelo
+y_pred_lgb_test = lgb_model.predict(X_test)
+# Score
+print("Raíz del error cuadrático medio de Árbol de LGBRegressor para el conjunto de prueba:", mean_squared_error(y_valid, y_pred_lgb_test, squared=False))
 
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-#  ## Análisis del modelo
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-#  ### Regresión Lineal.
 
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-#  ### Árbol de regresión.
 
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-#  ### Bosque aleatorio.
 
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-# ### CatBoost
 
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
-#  ### LightGBM
 
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
 
-# ### XGBRegressor
-# %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
 # ## Conclusiones.
 # - Podemos mejorar nuestros modelos limpiando de mejor manera nuestras características.
@@ -456,3 +440,4 @@ print("Raíz del error cuadrático medio de Árbol de LGBRegressor:", mean_squar
 # - LightGBM por velocidad.
 # - XGBBoost por calidad de predicción.
 # - Ambos modelos de potenciación tienen un tiempo de entrenamiento como de predicción a bosque aleatorio, sin embargo, nuestro bosque aleatorio tiene una mejor calidad de predicción que nuestros modelos de potenciación.
+# %%
