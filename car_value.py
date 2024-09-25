@@ -338,14 +338,23 @@ print('Raíz del error cuadrático medio de Regresión Lineal:', mean_squared_er
 # %%
 # Crea una instancia para el modelo
 clf_xgb = XGBRegressor()
-# Define el método de evaluación del modelo
-cv_xgb = RepeatedKFold(n_splits=10, n_repeats=3, random_state=seed)
-# Evalua el modelo
-scores_xgb = cross_val_score(clf_xgb, X_train, y_train, scoring='neg_root_mean_squared_error', cv=cv_xgb, n_jobs=1)
-# Scores en positivo
-scores_xgb_pos = np.absolute(scores_xgb)
-# Resultado
-print("Raíz del error cuadrático medio de XGBoost:", scores_xgb_pos.mean())
+# Crea un diccionario con los hiperparámetros para xgb
+xgb_grid = {
+    'learning_rate': [0.03, 0.05, 0.07],
+    'max_depth': [5,6,7]
+}
+# Pasa el modelo por GridSerachCV
+xgb_gridcv = GridSearchCV(clf_xgb, xgb_grid, scoring='neg_root_mean_squared_error',verbose=30)
+xgb_gridcv.fit(X_train, y_train)
+# Imprime los mejores parámetros
+xgb_gridcv.best_params_
+# %%
+# Entrena el modelo con los mejores parámetros
+clf_xgb = XGBRegressor(learning_rate=0.07, max_depth=7).fit(X_train, y_train)
+# Predice con el conjunto de validación
+y_pred_xgb = clf_xgb.predict(X_valid)
+# Muestra el score
+print("Raíz del error cuadrático medio de XGBRegressor:", mean_squared_error(y_valid, y_pred_xgb, squared=False))
 
 # %% [markdown]
 #  #### Árbol de Regresión.
