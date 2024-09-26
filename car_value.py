@@ -21,17 +21,13 @@ from category_encoders import BinaryEncoder
 from sklearn.preprocessing import OrdinalEncoder, RobustScaler
 from matplotlib import pyplot as plt
 import seaborn as sns
-from sklearn.impute import KNNImputer, SimpleImputer
-from sklearn.model_selection import train_test_split, GridSearchCV, RepeatedKFold, cross_val_score
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from catboost import CatBoostRegressor
 import lightgbm as lgb
 from xgboost import XGBRegressor
-from hyperopt import fmin, tpe, hp, STATUS_OK
-from hyperopt.pyll.base import scope
 
 
 # %% [markdown] Carga de los datos ----------------------------------------------------------------------------------------------------------------------------------
@@ -357,23 +353,23 @@ y_pred_xgb = clf_xgb.predict(X_valid)
 print("Raíz del error cuadrático medio de XGBRegressor:", mean_squared_error(y_valid, y_pred_xgb, squared=False))
 
 # %% [markdown]
-#  #### Árbol de Regresión.
+# #### Bosque Aleatorio.
 # %%
 # Crea una instancia del modelo.
-clf_dtr = DecisionTreeRegressor(random_state=seed)
-dtr_grid = {
+clf_rfr = RandomForestRegressor(random_state=seed)
+rfr_grid = {
     "criterion":["squared_error", "friedman_mse", "absolute_error", "poisson"],
     "max_depth":list(range(38,49,5))
 }
 # Pasa el modelo por GridSearchCV.
-dtr_gridscv = GridSearchCV(clf_dtr, dtr_grid, scoring='neg_root_mean_squared_error',verbose=30)
-dtr_gridscv.fit(X_train, y_train) 
-dtr_gridscv.best_params_
+rfr_gridscv = GridSearchCV(clf_rfr, rfr_grid, scoring='neg_root_mean_squared_error',verbose=30)
+rfr_gridscv.fit(X_train, y_train) 
+rfr_gridscv.best_params_
 
 # %%
 # Entrena el modelo con los mejores hiperparámetros
-clf_dtr = DecisionTreeRegressor(criterion='poisson', max_depth=43, random_state=seed).fit(X_train, y_train)
-y_pred_dtr = clf_dtr.predict(X_valid)
+clf_rfr = RandomForestRegressor(criterion='poisson', max_depth=43, random_state=seed).fit(X_train, y_train)
+y_pred_rfr = clf_rfr.predict(X_valid)
 # Resultado
 print("Raíz del error cuadrático medio de Árbol de Decisión de regresión:", mean_squared_error(y_valid, y_pred_dtr, squared=False))
 
