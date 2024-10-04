@@ -1,22 +1,6 @@
-<h1>
-	Descripción del proyecto.
-</h1>
-<p>
-Simulamos una empresa <b>"Rusty Bargain"</b> que se dedica a la venta de autos y está desarrollando una aplicación, la cual tendrá el propósito de poder averiguar el valor en el mercado de tú vehículo.
-
-Tendrémos un conjunto de datos en el cuál podremos observar:
-&emsp;- Especificaciónes Técnicas del vehículo.
-&emsp;- Versiónes de equipamiento.
-&emsp;- Precios.
-
-la cual realiza una aplicación para vender
-</p>
-
-# Modelo para predecir el precio de un vehículo puesto a la venta.
-
 ## Descripción del proyecto.
 
-###### Simulamos una empresa **"Rusty Bargain"** que se dedica a la venta de autos y está desarrollando una aplicación, la cual tendrá el propósito de poder averiguar el valor en el mercado de tú vehículo, basándonos en algunas característcas del vehículo como: marca, modelo, año del modelo, tipo de combustible y si ha tenido reparaciones previas. Se evaluaron modelos de **Machine Learning** para elegir el mejor en términos de rápidez de entrenamiento y calidad de predicción.
+###### Una empresa ficticia **"Rusty Bargain"** se dedica a la venta de autos y está desarrollando una aplicación, la cual tendrá el propósito de poder averiguar el valor en el mercado de tú vehículo, basándonos en algunas característcas del vehículo como: marca, modelo, año del modelo, tipo de combustible y si ha tenido reparaciones previas. Se evaluaron modelos de **Machine Learning** para elegir el mejor en términos de rápidez de entrenamiento y calidad de predicción.
 
 ## Motivación
 
@@ -25,6 +9,19 @@ la cual realiza una aplicación para vender
 ## Características del Dataset
 
 ###### 
-- Brand: Nombre de la marca (Toyota, BMW, Ford, etc.)
-- Model: Modelo específico del automóvil.
-- RegistrationYear: Año en que el vehículo fue fabricado.
+- DateCrawled: fecha en la que se descargó el perfil de la base de datos
+- Price: precio (en euros)
+- VehicleType: tipo de carrocería del vehículo
+- RegistrationYear: año de matriculación del vehículo
+- Gearbox: tipo de caja de cambios
+- Power: potencia (CV)
+- Model: modelo del vehículo
+- Kilometer: kilometraje (medido en km de acuerdo con las especificidades regionales del conjunto de datos)
+- RegistrationMonth: mes de matriculación del vehículo
+- FuelType: tipo de combustible
+- Brand: marca del vehículo
+- Repaired: vehículo con o sin reparación
+- DateCreated: fecha de creación del perfil
+- NumberOfPictures: número de fotos del vehículo
+- PostalCode: código postal del propietario del perfil (usuario)
+- LastSeen: fecha de la última vez que el usuario estuvo activo
