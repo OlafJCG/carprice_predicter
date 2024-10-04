@@ -25,3 +25,17 @@
 - NumberOfPictures: número de fotos del vehículo
 - PostalCode: código postal del propietario del perfil (usuario)
 - LastSeen: fecha de la última vez que el usuario estuvo activo
+
+## Herramientas Utilizadas
+
+###### 
+- Lenguage: Python 3.11.2
+- Librerías:
+	- Pandas: Manipulación de datos.
+	- Numpy: Cálculos matemáticos.
+	- re (Regular Expression operations): Preprocesar nombres de las columnas.
+	- Category Encoders: Categorizar Características sin aumentar la dimensionalidad.
+	- Matplotlib y Seaborn: Visualización de datos con gráficos.
+	- Scikit-learn: Preparación de los datos, creación y evaluación de modelos.
+	- Catboost, LightGBM, XGBoost: Modelos de Regresión con Potenciación de Gradiente.
+	
