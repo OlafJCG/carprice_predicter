@@ -418,6 +418,7 @@ print("Raíz del error cuadrático medio de Árbol de LGBRegressor:", mean_squar
 
 # %% [markdown]----------------------------------------------------------------------------------------------------------------------------------
 # ### Prueba el mejor modelo
+# %%
 y_pred_lgb_test = lgb_model.predict(X_test)
 # Score
 print("Raíz del error cuadrático medio de Árbol de LGBRegressor para el conjunto de prueba:", mean_squared_error(y_test, y_pred_lgb_test, squared=False))
