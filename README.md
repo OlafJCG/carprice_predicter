@@ -39,3 +39,25 @@
 	- Scikit-learn: Preparación de los datos, creación y evaluación de modelos.
 	- Catboost, LightGBM, XGBoost: Modelos de Regresión con Potenciación de Gradiente.
 	
+## Proceso del proyecto
+
+###### 
+	1. Carga y exploración de los datos.
+		- Análisis inicial del conjunto de datos: revisión de la estructura, revisión de valores faltantes, tipos y distribución de los mismos, así como identificar qué datos no son necesarios para los modelos.
+	2. Limpieza y preprocesamiento.
+		- Eliminar columnas que no servirán para los modelos.
+		- Ajustar los nombres de las columnas a un formato general (camel case)
+		- Rellenar valores faltantes.
+		- Eliminar valores anomalos.
+		- Normalizar valores númericos.
+	3. Búsqueda de modelos.
+		- Creación de modelos y cálculo de su rendimiento (rmse)
+			- Regresión Líneal.
+			- XGBoost.
+			- Bosque Aleatorio.
+			- CatBoost.
+			- LightGBM.
+		- Elección del mejor modelo.
+			- El modelo que tuviera el entrenamiento rápido y con los mejores resultados (rmse).
+	4. Resultados.
+		- El modelo final puede predecir el precio de un vehículo con un margen de error de 1800 euros.
