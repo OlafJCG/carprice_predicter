@@ -318,3 +318,6 @@ geckodriver.log
 
 # Ignora archivos de configuración
 /vscode
+
+# Ignora info de modelo catboost
+catboost_info
