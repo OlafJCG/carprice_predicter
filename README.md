@@ -61,3 +61,41 @@
 			- El modelo que tuviera el entrenamiento rápido y con los mejores resultados (rmse).
 	4. Resultados.
 		- El modelo final puede predecir el precio de un vehículo con un margen de error de 1800 euros.
+#
+# Instalación (Utilizando git bash)
+1- Clona el repositorio dentro de un directorio que quieras que se cree la carpeta del proyecto.
+```bash 
+git clone https://github.com/OlafJCG/carprice_predicter.git
+```
+2- Navega al directorio del proyecto.
+```bash
+cd carprice_predicter.git
+```
+3- Crea un entorno virtual.
+```bash
+python -m venv venv
+```
+4- Activa el entorno virtual.
+```bash
+source venv/Scripts/activate
+```
+5- Instala las dependencias
+```bash
+pip install -r requirements.txt
+```
+
+# Uso
+Una vez instalado el proyecto.
+
+- Navegamos dentro del directorio.
+```
+pipeline/
+```
+- Ejecutamos el siguiente archivo para entrenar los modelos.
+```
+p01_model_training.py
+``` 
+- Podemos observar el rendimiento del modelo elegido ejecutando el archivo (se ejecuta el modelo con el test de prueba):
+```
+insight/i04_best_model_test.py
+```
